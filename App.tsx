@@ -5,13 +5,14 @@ import ProfileForm from './components/ProfileForm';
 import DrawingCanvas from './components/DrawingCanvas';
 import Tutorial from './components/Tutorial';
 import KidBackground from './components/KidBackground';
+import { Logo } from './constants';
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode>('intro');
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
-    // Purely state-based: resets on page reload
+    // Purely state-based: resets on page reload as requested
     const timer = setTimeout(() => {
       setMode('welcome');
     }, 3000);
@@ -37,14 +38,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative font-['Quicksand']">
       {mode !== 'drawing' && <KidBackground />}
 
       {mode === 'intro' && (
-        <div className="flex flex-col items-center justify-center min-h-screen text-center p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen text-center p-6 bg-white z-50 fixed inset-0">
           <div className="intro-animation">
-             <h1 className="text-8xl font-black text-blue-600 mb-4 tracking-tighter">VayuLekha</h1>
-             <p className="text-4xl text-slate-400 font-bold tracking-[0.3em] uppercase">Practice Pad</p>
+             <Logo className="w-64 h-64" />
+             <p className="text-4xl text-slate-300 font-bold tracking-[0.3em] uppercase mt-8">A Fun Pad</p>
           </div>
         </div>
       )}
@@ -52,19 +53,14 @@ const App: React.FC = () => {
       {mode === 'welcome' && (
         <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center animate-in fade-in zoom-in duration-1000">
           <div className="mb-12 floating">
-            <div className="w-48 h-48 bg-blue-500 rounded-[3rem] flex items-center justify-center shadow-3xl shadow-blue-200">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-28 w-28 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-               </svg>
-            </div>
+            <Logo className="w-64 h-64 drop-shadow-2xl" />
           </div>
-          <h1 className="text-7xl font-black text-slate-800 mb-6 tracking-tight">VayuLekha</h1>
           <p className="text-3xl text-slate-500 max-w-xl mb-12 font-bold leading-relaxed">
-            Practice your name and magic numbers in the air!
+            No pressure. Take your time. This space is yours!
           </p>
           <button 
             onClick={() => setMode('profile')}
-            className="px-16 py-7 bg-blue-600 text-white rounded-[2.5rem] text-3xl font-black shadow-2xl hover:shadow-blue-300 hover:bg-blue-700 transition-all transform hover:-translate-y-2 active:scale-95"
+            className="px-16 py-7 bg-gradient-to-r from-[#50C2F7] to-[#7D3E98] text-white rounded-[2.5rem] text-3xl font-black shadow-2xl hover:shadow-purple-300 transition-all transform hover:-translate-y-2 active:scale-95"
           >
             Start Practice
           </button>
@@ -98,10 +94,10 @@ const App: React.FC = () => {
 
              <button 
                onClick={() => startInteraction(false)}
-               className="p-12 bg-white/80 backdrop-blur-md rounded-[3.5rem] shadow-2xl border-4 border-transparent hover:border-green-400 transition-all text-left group hover:-translate-y-2"
+               className="p-12 bg-white/80 backdrop-blur-md rounded-[3.5rem] shadow-2xl border-4 border-transparent hover:border-purple-400 transition-all text-left group hover:-translate-y-2"
              >
-                <div className="w-20 h-20 bg-green-100 rounded-3xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
-                   <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="w-20 h-20 bg-purple-100 rounded-3xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                    </svg>
                 </div>
@@ -121,7 +117,7 @@ const App: React.FC = () => {
 
       {mode === 'tutorial' && <Tutorial onFinish={() => setMode('drawing')} />}
 
-      {mode === 'drawing' && <DrawingCanvas onBack={() => setMode('choice')} />}
+      {mode === 'drawing' && <DrawingCanvas profile={profile} onBack={() => setMode('choice')} />}
     </div>
   );
 };

@@ -3,17 +3,62 @@ import React from 'react';
 import { ColorOption } from './types';
 
 export const COLORS: ColorOption[] = [
+  { name: 'Vayu Blue', value: '#50C2F7' },
+  { name: 'Lekha Purple', value: '#7D3E98' },
   { name: 'Classic Black', value: '#1E293B' },
   { name: 'Ruby Red', value: '#E11D48' },
   { name: 'Deep Blue', value: '#2563EB' },
   { name: 'Emerald Green', value: '#10B981' },
   { name: 'Vibrant Orange', value: '#F59E0B' },
-  { name: 'Vivid Purple', value: '#8B5CF6' },
   { name: 'Coral Pink', value: '#FF6B9D' },
   { name: 'Teal', value: '#4ECDC4' },
   { name: 'Golden Sun', value: '#FACC15' },
-  { name: 'Brown', value: '#78350F' },
 ];
+
+export const Logo: React.FC<{ className?: string, showText?: boolean }> = ({ className = "w-48 h-48", showText = true }) => (
+  <div className={`flex flex-col items-center justify-center ${className}`}>
+    <div className="relative w-full h-full flex items-center justify-center">
+      {/* Outer Circle Rings */}
+      <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full opacity-30">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#94a3b8" strokeWidth="1" />
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#cbd5e1" strokeWidth="0.5" />
+      </svg>
+      
+      {/* Main Stylized V */}
+      <svg viewBox="0 0 200 200" className="w-[80%] h-[80%] z-10">
+        <defs>
+          <linearGradient id="vGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#50C2F7" />
+            <stop offset="100%" stopColor="#7D3E98" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <path 
+          d="M50,80 C60,60 80,140 100,140 C120,140 150,50 170,40" 
+          fill="none" 
+          stroke="url(#vGradient)" 
+          strokeWidth="12" 
+          strokeLinecap="round"
+          className="drop-shadow-sm"
+        />
+        {/* The Sparkle/Dot */}
+        <circle cx="170" cy="40" r="8" fill="white" stroke="#7D3E98" strokeWidth="2" filter="url(#glow)" />
+      </svg>
+    </div>
+    {showText && (
+      <div className="mt-2 flex font-bold text-4xl tracking-tight">
+        <span className="text-[#50C2F7]">Vayu</span>
+        <span className="text-[#7D3E98]">Lekha</span>
+      </div>
+    )}
+  </div>
+);
 
 export const ICONS = {
   Back: () => (
@@ -39,6 +84,16 @@ export const ICONS = {
   Eraser: () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
        <path strokeLinecap="round" strokeLinejoin="round" d="M6.143 7.143L16.857 17.857M5.143 14.143l1.5-1.5a1.5 1.5 0 012.122 0l7.5 7.5a1.5 1.5 0 010 2.122l-1.5 1.5a1.5 1.5 0 01-2.122 0l-7.5-7.5a1.5 1.5 0 010-2.122z" />
+    </svg>
+  ),
+  Sun: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 21v-2.25m-6.364-.386l1.591-1.591M3 12h2.25m.386-6.364l1.591 1.591M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+    </svg>
+  ),
+  Moon: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
     </svg>
   )
 };
